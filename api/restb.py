@@ -11,7 +11,7 @@ def get_single_room_info(image_url):
     response = requests.get(root_url, params={'client_key': client_key,
                                               'model_id': ','.join([model_type, model_features, model_appliances]),
                                               'image_url': image_url
-    })
+                                              })
     if response.status_code == 200:
         solutions = response.json()['response']['solutions']
         room_type = solutions[model_type]['top_prediction']['label']
