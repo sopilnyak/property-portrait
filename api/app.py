@@ -25,6 +25,14 @@ def group_by_types(image_urls, room_info):
     return dict(types)
 
 
+def prettify_join(array):
+    if len(array) == 0:
+        return ''
+    if len(array) == 1:
+        return array[0]
+    return ', '.join(array[:-1]) + ' and ' + array[-1]
+
+
 def get_tip(existing_types, form):
     existing_types = set(existing_types)
     recommended_types = {'bathroom': 'bathroom',
@@ -40,21 +48,17 @@ def get_tip(existing_types, form):
     for recommended_type, display_string in recommended_types.items():
         if recommended_type not in existing_types:
             tips.append(display_string)
+
     if len(tips) == 0:
         return ''
-    if len(tips) >= 2:
-        tip = ', '.join(tips[:-1]) + ' and ' + tips[-1]
-    else:
-        tip = tips[0]
-    return 'You might want to add photos of {}'.format(tip)
+    return 'You might want to add photos of {}'.format(prettify_join(tips))
 
 
 @app.route('/api/description', methods=['POST'])
 def get_description():
     if request.method == 'POST':
-        request_json = request.json
-        form = request_json['form']
-        image_keys = request_json['image_keys']
+        form = request.json['form']
+        image_keys = request.json['image_keys']
         bucket_location = s3_client.get_bucket_location(Bucket=s3_bucket_name)
         image_urls = ['https://s3-{0}.amazonaws.com/{1}/{2}'.format(
             bucket_location['LocationConstraint'], s3_bucket_name, key)
@@ -69,7 +73,8 @@ def get_description():
 
 @app.route('/api/xml')
 def get_xml():
-    pass
+    description = request.json['description']
+
 
 
 if __name__ == '__main__':
