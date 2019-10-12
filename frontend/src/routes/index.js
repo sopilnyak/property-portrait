@@ -1,13 +1,12 @@
 import React from 'react';
 import {Route, Switch, withRouter} from 'react-router';
-import TypeForm from "./../pages/TypeForm";
 import Main from "./../pages/Main";
-import Result from "./../pages/Result";
+import FinalPage from "./../pages/FinalPage";
 
 const MainRouter = () => (
     <Switch>
         <Route exact path='/' component={Main} />
-        <Route path='/result' component={Result} />
+        <Route path='/result' component={FinalPage} />
     </Switch>
 );
 

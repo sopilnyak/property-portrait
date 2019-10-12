@@ -1,9 +1,15 @@
 import React, {Component} from 'react';
+import TextForm from './../TextForm';
 
-class TextArea extends Component {
+import './styles.css';
+
+class TextArea extends TextForm {
+    constructor(props) {
+        super(props);
+        console.log(props);
+    }
     render() {
-        return (<p>TEXTAREA</p>
-        );
+        return (<p>{this.state.adText}</p>);
     }
 }
 

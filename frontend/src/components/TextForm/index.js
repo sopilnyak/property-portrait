@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import Button from './../Button';
-
 import './styles.css';
 
 class TextForm extends Component {
@@ -8,8 +6,16 @@ class TextForm extends Component {
         super(props);
 
         this.state = {
-            adText: 'alalalalalalalalalalalal\n\n\naakakakka',
-            itemList: ['microwave, fridge, flowers, window'],
+            adText: 'Заголовок\n' +
+                'Заголовок – это самая заметная часть объявления. В идеале он должен включать слова, которые люди используют при поиске. В текстовых объявлениях используются три заголовка. Максимальная длина каждого из них – 30 символов. Заголовки разделяются вертикальной чертой и могут показываться в разных сочетаниях. Это зависит от устройства, с помощью которого потенциальный клиент просматривает рекламу.\n' +
+                '\n' +
+                'Отображаемый URL\n' +
+                'Отображаемый URL – это адрес рекламируемого сайта. Обычно он выделен зеленым цветом. Отображаемый URL содержит домен конечного URL и текст необязательных полей Путь. Этот текст помогает пользователям понять, на какую страницу ведет объявление. Язык текста полей "Путь" может отличаться от языка остального текста отображаемого URL. \n',
+            photoGroups: [
+                {room: 'Bedroom', photoKeys: ['https://via.placeholder.com/120', 'https://via.placeholder.com/80', 'https://via.placeholder.com/80'], key: 0},
+                {room: 'Bath', photoKeys: ['https://via.placeholder.com/120'], key: 1},
+                {room: 'Kitchen', photoKeys: ['https://via.placeholder.com/120', 'https://via.placeholder.com/80'], key: 2},
+            ],
         };
 
         this.formChange = this.formChange.bind(this);
@@ -21,7 +27,7 @@ class TextForm extends Component {
 
     render() {
         return (
-            <div>
+            <div className="textForm">
                 <form>
                     <div className="infoForm">
                     <div className="secondColumn">
@@ -68,6 +74,7 @@ class TextForm extends Component {
                             <input type="checkbox" name="schools" className="single"/> Schools <br />
                             <input type="checkbox" name="shops" className="single"/> Shops <br />
                         </div>
+
                     </div>
                     </div>
                     <input type="submit" value="Submit" />
