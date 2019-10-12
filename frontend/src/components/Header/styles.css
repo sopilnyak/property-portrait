@@ -1,0 +1,30 @@
+header {
+    position: fixed;
+    width: 100%;
+    height: var(--heading-height);
+}
+
+/* Create angled background with 'before' pseudo-element */
+header::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 6em;
+    width: 100%;
+    height: calc(var(--heading-height) + 5em);
+    z-index: -1;
+    transform: skewY(-3.5deg);
+    background: linear-gradient(#4e4376, #2b5876);
+    background-size: cover;
+    border-bottom: .2em solid #fff;
+}
+
+h1 {
+    font-size: calc(2.8em + 2.6vw);
+    font-weight: 700;
+    letter-spacing: .01em;
+    padding: 10rem 0 0 4.5rem;
+    text-shadow: .022em .022em .022em #111;
+    color: #fff;
+}
