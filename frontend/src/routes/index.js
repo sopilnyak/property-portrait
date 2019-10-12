@@ -6,8 +6,7 @@ import Result from "./../pages/Result";
 
 const MainRouter = () => (
     <Switch>
-        <Route exact path='/' component={TypeForm} />
-        <Route path='/main' component={Main} />
+        <Route exact path='/' component={Main} />
         <Route path='/result' component={Result} />
     </Switch>
 );
