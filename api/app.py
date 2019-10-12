@@ -49,20 +49,27 @@ def get_tip(existing_types, form):
     return 'You might want to add photos of {}'.format(tip)
 
 
-@app.route('/api/description')
+@app.route('/api/description', methods=['POST'])
 def get_description():
-    form = {'bedrooms': 0}
-    image_keys = request.args.get('image_keys').split(',')
-    bucket_location = s3_client.get_bucket_location(Bucket=s3_bucket_name)
-    image_urls = ['https://s3-{0}.amazonaws.com/{1}/{2}'.format(
-        bucket_location['LocationConstraint'], s3_bucket_name, key)
-        for key in image_keys]
+    if request.method == 'POST':
+        request_json = request.json
+        form = request_json['form']
+        image_keys = request_json['image_keys']
+        bucket_location = s3_client.get_bucket_location(Bucket=s3_bucket_name)
+        image_urls = ['https://s3-{0}.amazonaws.com/{1}/{2}'.format(
+            bucket_location['LocationConstraint'], s3_bucket_name, key)
+            for key in image_keys]
 
-    rooms_info = get_rooms_info(image_urls)
-    types = group_by_types(image_urls, rooms_info)
-    return {'description': make_description(rooms_info),
-            'tip': get_tip(types.keys(), form),
-            'types': types}
+        rooms_info = get_rooms_info(image_urls)
+        types = group_by_types(image_urls, rooms_info)
+        return {'description': make_description(rooms_info),
+                'tip': get_tip(types.keys(), form),
+                'types': types}
+
+
+@app.route('/api/xml')
+def get_xml():
+    pass
 
 
 if __name__ == '__main__':
