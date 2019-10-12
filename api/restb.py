@@ -20,7 +20,9 @@ def get_single_room_info(image_url):
 
 
 def get_rooms_info(image_urls):
-    return [get_single_room_info(url) for url in image_urls]
+    return [{'room_type': 'kitchen', 'room_features': ['vaulted_ceiling', 'hardwood_floor', 'stainless_steel',
+    'natural_light', 'oven', 'refrigerator', 'microwave']}, {'room_type': 'pool', 'room_features': ['pool']}]
+    #return [get_single_room_info(url) for url in image_urls]
 
 
 def test_room_info():

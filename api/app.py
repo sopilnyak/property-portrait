@@ -17,7 +17,10 @@ def group_by_types(image_urls, room_info):
     types = defaultdict(list)
     for image_url, info in zip(image_urls, room_info):
         types[info['room_type'].capitalize()].append(image_url)
-    return dict(types)
+    result = []
+    for type, urls in types.items():
+        result.append({'room': type, 'image_urls': urls})
+    return result
 
 
 def get_tip(existing_types, form):
@@ -26,7 +29,7 @@ def get_tip(existing_types, form):
                          'outdoor_building': 'facade',
                          'kitchen': 'kitchen',
                          'corridor': 'corridor'}
-    if form['bedrooms'] > 0:
+    if 'bedrooms' in form and int(form['bedrooms']) > 0:
         recommended_types['bedroom'] = 'bedroom'
     else:
         recommended_types['living_room'] = 'living room'
@@ -53,9 +56,17 @@ def get_description():
 
         rooms_info = get_rooms_info(image_urls)
         types = group_by_types(image_urls, rooms_info)
-        return {'description': make_description(1, defaultdict(str, form), rooms_info),
-                'tip': get_tip(types.keys(), form),
+        return {'description': make_description(0, defaultdict(str, form), rooms_info, language='en'),
+                'tip': get_tip([t['room'] for t in types], form),
                 'types': types}
+
+
+@app.after_request
+def after_request(response):
+    header = response.headers
+    header['Access-Control-Allow-Origin'] = '*'
+    header['Access-Control-Allow-Headers'] = '*'
+    return response
 
 
 @app.route('/api/xml')
