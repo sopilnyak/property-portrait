@@ -1,23 +1,16 @@
 import requests
-import base64
-import urllib.request
-import tempfile
-import os
 
-root_url = 'https://api-us.restb.ai/vision/v2/'
+root_url = 'https://api-eu.restb.ai/vision/v2/multipredict'
 client_key = '27fabe8d2131a451c5cc9b785568c9aa95911614153c31dbcf6dd3b9fe9b403d'
 
 
-def get_room_info(image_path):
+def get_single_room_info(image_url):
     model_type = 'real_estate_global_v2'
     model_features = 're_features_v3'
     model_appliances = 're_appliances'
-    with open(image_path, 'rb') as image:
-        encoded_image = base64.b64decode(image.read())
-    response = requests.post(root_url, params={
-        'model_id': ','.join([model_type, model_features, model_appliances]),
-        'image_base64': encoded_image,
-        'client_key': client_key
+    response = requests.get(root_url, params={'client_key': client_key,
+                                              'model_id': ','.join([model_type, model_features, model_appliances]),
+                                              'image_url': image_url
     })
     if response.status_code == 200:
         solutions = response.json()['response']['solutions']
@@ -25,18 +18,20 @@ def get_room_info(image_path):
         detections = solutions[model_features]['detections'] + solutions[model_appliances]['detections']
         features = [detection['label'] for detection in detections]
         return {'room_type': room_type, 'features': features}
-    else:
-        print(response)
+
+
+def get_rooms_info(image_urls):
+    return [get_single_room_info(url) for url in image_urls]
 
 
 def test_room_info():
-    image_path = '{}.jpg'.format(
-        os.path.splitext(next(tempfile._get_candidate_names()))[0]
-    )
-    urllib.request.urlretrieve("https://www.opalsands.com/getmedia/8766c2d7-9e28-4a37-824e-da6a8101f915/Deluxe_King_Guest_Room_575035_high.jpg/?width=3000&height=2000&ext=.jpg&maxsidesize=800", image_path)
-    room_info = get_room_info(image_path)
-    print(room_info['room_type'])
-    print(room_info['features'])
+    image_urls = ['https://cnet4.cbsistatic.com/img/Gu0ly_clVsc-EHnRAea7i0GUhRI=/1600x900/2019/03/14/2609b0eb-1263-43e2'
+                  '-9380-c1f8cbced873/gettyimages-1089101352.jpg',
+                  'https://cdn.shopify.com/s/files/1/2660/5202/products/gbciun6b8ha51n8x3jsm_1400x.jpg?v=1536591617',
+                  'https://image.wrenkitchens.com/frontal_range/milano_ultra_bianco_gloss_1418.jpg?q=70&w=510&h=454&'
+                  'fit=crop&s=7007e79fb17f2b843eab5d33b097c725']
+    room_info = get_rooms_info(image_urls)
+    print(room_info)
 
 
 test_room_info()
