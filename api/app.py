@@ -2,6 +2,7 @@ from flask import Flask, request
 import boto3
 from restb import get_rooms_info
 from collections import defaultdict
+from tools import prettify_join
 from descr import make_description
 
 app = Flask(__name__)
@@ -17,14 +18,6 @@ def group_by_types(image_urls, room_info):
     for image_url, info in zip(image_urls, room_info):
         types[info['room_type'].capitalize()].append(image_url)
     return dict(types)
-
-
-def prettify_join(array):
-    if len(array) == 0:
-        return ''
-    if len(array) == 1:
-        return array[0]
-    return ', '.join(array[:-1]) + ' and ' + array[-1]
 
 
 def get_tip(existing_types, form):
