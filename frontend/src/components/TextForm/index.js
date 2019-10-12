@@ -20,30 +20,7 @@ class TextForm extends Component {
 
     this.state = {
       adText: "Ad text here",
-      photoGroups: [
-        {
-          room: "Bedroom",
-          photoKeys: [
-            "https://via.placeholder.com/120",
-            "https://via.placeholder.com/80",
-            "https://via.placeholder.com/80"
-          ],
-          key: 0
-        },
-        {
-          room: "Bath",
-          photoKeys: ["https://via.placeholder.com/120"],
-          key: 1
-        },
-        {
-          room: "Kitchen",
-          photoKeys: [
-            "https://via.placeholder.com/120",
-            "https://via.placeholder.com/80"
-          ],
-          key: 2
-        }
-      ]
+      photoGroups: []
     };
 
     this.formChange = this.formChange.bind(this);
@@ -71,8 +48,15 @@ class TextForm extends Component {
     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
     xhr.onload = () => {
       this.setState({ adText: xhr.response.description });
+      console.log(xhr.response.types);
+      this.setState({ photoGroups: xhr.response.types });
     };
-    xhr.send(JSON.stringify({ form: json_data, image_keys: [] }));
+    xhr.send(
+      JSON.stringify({
+        form: json_data,
+        image_keys: ["flat1.jpg", "flat2.jpg"]
+      })
+    );
   };
 
   render() {

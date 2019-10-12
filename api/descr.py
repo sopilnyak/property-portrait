@@ -41,15 +41,24 @@ def make_description(session_id: int, params: dict, photo_features: list, langua
         return make_description_ru(joined_features, living_features, kitchen_features, params)
 
     main_template = "This %s %s for rent is located %s. \
-The %s has floor area of %sm2 \
-including %s bedroom%s and %s %sbathroom%s%s.\
-%s%s%s%s%s%s%s%s\n%s \
-Tel.: %s, %s\n"
+The %s has floor area of %sm2 including %s.\
+%s%s%s%s%s\n\
+%s%s%s\n%s \
+Tel.: %s, %s.\n"
 
-    mult_bedr = 's' if params["bedrooms"] != "1" else ''
-    mult_bath = 's' if params["bathrooms"] != "1" else ''
-    terrace = " and terrace" if params["terrace"] else ""
-    conditioning = " with air conditioning" if params["air_conditioning"] else ""
+    rooms = [params["bedrooms"], params["bathrooms"]]
+    rooms[0] += " bedroom"
+    if params["bedrooms"] != "1":
+        rooms[0] += "s"
+    if params["air_conditioning"]:
+        rooms[0] += " with air conditioning"
+    rooms[1] += " bathroom"
+    if params["bathrooms"] != "1":
+        rooms[1] += "s"
+    if params["terrace"]:
+        rooms.append("terrace")
+    rooms = prettify_join(rooms)
+
     outside_set = {"deck", "dock", "hot tub", "sport court", "garage", "lawn", "outdoor kitchen",
                    "outdoor living space", "pergola", "pool"}
     outside_set &= joined_features
@@ -71,14 +80,26 @@ Tel.: %s, %s\n"
     if len(kitchen_features) == 0:
         kitchen = ""
 
-    pets = "Living with pets is allowed." if params["pets"] else ""
+    facilities = set()
+    if params["transport"]:
+        facilities.add("good transport connections")
+    if params["schools"]:
+        facilities.add("schools")
+    if params["shops"]:
+        facilities.add("plenty of shops")
+    facilities = prettify_join(facilities)
+    facilities = facilities.capitalize()
+    if len(facilities) > 0:
+        facilities += " are within walking distance. "
+
+    pets = "Living with pets is allowed. " if params["pets"] else ""
     disabled = "Home is adapted for persons with reduced mobility." if params["disabled"] else ""
 
     return main_template % (
         adv1_words[adv1], params["type"], params["location"],
-        params["type"], params["size"],
-        params["bedrooms"], mult_bedr, params["bathrooms"], adv_bath_words[adv_bath], mult_bath, terrace,
-        conditioning, outside, view, condition, living, kitchen, pets, disabled, goodbye_words[goodbye],
+        params["type"], params["size"], rooms,
+        outside, view, condition, living, kitchen,
+        facilities, pets, disabled, goodbye_words[goodbye],
         params["phone"], params["name"])
 
 
