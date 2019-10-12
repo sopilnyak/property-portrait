@@ -1,6 +1,19 @@
 import React, { Component } from "react";
 import "./styles.css";
 
+const PhotoGroup = ({room, photoKeys}) => {
+  return (
+      <div className="photoGroup">
+        <h3>{room}</h3>
+        <div className="scrollmenu">
+          {photoKeys.map(item =>
+              (<img className="roomImg" src={item}/>))}
+        </div>
+        <hr />
+      </div>
+  )
+};
+
 class TextForm extends Component {
   constructor(props) {
     super(props);
@@ -64,11 +77,13 @@ class TextForm extends Component {
 
   render() {
     return (
-      <div>
+        <div>
+        <main className="mainPart">
+          <p>{this.state.adText}</p>
+
         <form onSubmit={this.handleSubmit}>
           <div className="infoForm">
             <div className="secondColumn">
-              {this.state.adText}
               <input
                 name="name"
                 type="text"
@@ -178,7 +193,11 @@ class TextForm extends Component {
           </div>
           <input type="submit" value="Submit" />
         </form>
-      </div>
+        </main>
+          <div className="photoForm">
+            {this.state.photoGroups.map((item) => PhotoGroup(item))}
+          </div>
+  </div>
     );
   }
 }
