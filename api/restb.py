@@ -10,14 +10,13 @@ def get_single_room_info(image_url):
     model_appliances = 're_appliances'
     response = requests.get(root_url, params={'client_key': client_key,
                                               'model_id': ','.join([model_type, model_features, model_appliances]),
-                                              'image_url': image_url
-                                              })
+                                              'image_url': image_url})
     if response.status_code == 200:
         solutions = response.json()['response']['solutions']
         room_type = solutions[model_type]['top_prediction']['label']
         detections = solutions[model_features]['detections'] + solutions[model_appliances]['detections']
         features = [detection['label'] for detection in detections]
-        return {'room_type': room_type, 'features': features}
+        return {'room_type': room_type, 'room_features': features}
 
 
 def get_rooms_info(image_urls):
@@ -32,6 +31,3 @@ def test_room_info():
                   'fit=crop&s=7007e79fb17f2b843eab5d33b097c725']
     room_info = get_rooms_info(image_urls)
     print(room_info)
-
-
-test_room_info()

@@ -53,7 +53,7 @@ def get_description():
 
         rooms_info = get_rooms_info(image_urls)
         types = group_by_types(image_urls, rooms_info)
-        return {'description': make_description(0, defaultdict(str, form), rooms_info),
+        return {'description': make_description(1, defaultdict(str, form), rooms_info),
                 'tip': get_tip(types.keys(), form),
                 'types': types}
 

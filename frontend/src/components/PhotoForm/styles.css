@@ -1,19 +1,12 @@
-div.scrollmenu {
-    overflow: auto;
-    white-space: nowrap;
-}
-
-div.scrollmenu p {
-    display: inline-block;
-    text-align: center;
-    padding: 14px 10px;
-    text-decoration: none;
+.roomImg {
+    margin-left: 10px;
 }
 
 h3 {
-    font-size: 24px;
+    font-size: 32px;
     font-weight: bold;
     color: #4CAF50;
+    width: 150px;
 }
 
 hr {
@@ -23,4 +16,14 @@ hr {
     border-bottom: 1px solid #ccc;
     margin: 1em 0;
     padding: 0;
+}
+
+.photoGroup {
+    display: flex;
+    align-items: center;
+    margin-top: -25px;
+}
+
+.photoForm {
+    margin-top: -50px;
 }

@@ -1,3 +1,7 @@
+input {
+    font-size: 18px;
+}
+
 input[type=text], select {
     width: 100%;
     padding: 12px 20px;
@@ -71,6 +75,12 @@ label + input[type=radio] + label {
 
 select {
     background: rgb(232, 240, 254);
+}
+
+.textForm {
+    width: 35%;
+    font-size: 20px;
+    margin-top: -30px;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Roboto');

@@ -1,10 +1,16 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
+import TextForm from "./../TextForm";
 
-class TextArea extends Component {
-    render() {
-        return (<p>TEXTAREA</p>
-        );
-    }
+import "./styles.css";
+
+class TextArea extends TextForm {
+  constructor(props) {
+    super(props);
+    console.log(props);
+  }
+  render() {
+    return <p>{this.props.adText}</p>;
+  }
 }
 
 export default TextArea;
