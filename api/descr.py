@@ -43,7 +43,8 @@ def make_description(session_id: int, params: dict, photo_features: list, langua
     main_template = "This %s %s for rent is located %s. \
 The %s has floor area of %sm2 \
 including %s bedroom%s %sand %s %sbathroom%s%s.\
-%s%s%s%s%s%s\n%s%s%s\n%s \
+%s%s%s%s%s\n\
+%s%s%s\n%s \
 Tel.: %s, %s.\n"
 
     mult_bedr = 's' if params["bedrooms"] != "1" else ''
@@ -91,7 +92,8 @@ Tel.: %s, %s.\n"
         adv1_words[adv1], params["type"], params["location"],
         params["type"], params["size"],
         params["bedrooms"], mult_bedr, params["bathrooms"], adv_bath_words[adv_bath], conditioning, mult_bath, terrace,
-        outside, view, condition, living, kitchen, pets, disabled, goodbye_words[goodbye],
+        outside, view, condition, living, kitchen,
+        facilities, pets, disabled, goodbye_words[goodbye],
         params["phone"], params["name"])
 
 
