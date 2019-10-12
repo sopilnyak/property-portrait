@@ -43,8 +43,8 @@ def make_description(session_id: int, params: dict, photo_features: list, langua
     main_template = "This %s %s for rent is located %s. \
 The %s has floor area of %sm2 \
 including %s bedroom%s %sand %s %sbathroom%s%s.\
-%s%s%s%s%s%s%s%s\n%s \
-Tel.: %s, %s\n"
+%s%s%s%s%s%s\n%s%s%s\n%s \
+Tel.: %s, %s.\n"
 
     mult_bedr = 's' if params["bedrooms"] != "1" else ''
     mult_bath = 's' if params["bathrooms"] != "1" else ''
@@ -71,6 +71,18 @@ Tel.: %s, %s\n"
     kitchen = "The %skitchen is equipped with %s.\n" % (adv_kitchen_words[adv_kitchen], prettify_join(kitchen_features))
     if len(kitchen_features) == 0:
         kitchen = ""
+
+    facilities = set()
+    if params["transport"]:
+        facilities.add("good transport connections")
+    if params["schools"]:
+        facilities.add("schools")
+    if params["shops"]:
+        facilities.add("plenty of shops")
+    facilities = prettify_join(facilities)
+    facilities.capitalize()
+    if len(facilities) > 0:
+        facilities += "are within walking distance. "
 
     pets = "Living with pets is allowed. " if params["pets"] else ""
     disabled = "Home is adapted for persons with reduced mobility." if params["disabled"] else ""
