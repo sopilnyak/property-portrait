@@ -43,7 +43,7 @@ def make_description(session_id: int, params: dict, photo_features: list, langua
     main_template = "This %s %s for rent is located %s. \
 The %s has floor area of %sm2 \
 including %s bedroom%s and %s %sbathroom%s%s.\
-%s %s %s %s %s %s %s %s %s \
+%s%s%s%s%s%s%s%s\n%s \
 Tel.: %s, %s\n"
 
     mult_bedr = 's' if params["bedrooms"] != "1" else ''
@@ -71,8 +71,8 @@ Tel.: %s, %s\n"
     if len(kitchen_features) == 0:
         kitchen = ""
 
-    pets = "Living with pets is allowed.\n" if params["pets"] else ""
-    disabled = "Home is adapted for persons with reduced mobility.\n" if params["disabled"] else ""
+    pets = "Living with pets is allowed." if params["pets"] else ""
+    disabled = "Home is adapted for persons with reduced mobility." if params["disabled"] else ""
 
     return main_template % (
         adv1_words[adv1], params["type"], params["location"],
@@ -83,6 +83,17 @@ Tel.: %s, %s\n"
 
 
 def make_description_ru(joined_features: set, living_features: set, kitchen_features: set, params: dict):
+    toru = {"deck": "настил", "dock": "причал", "hot tub": "джакузи", "sport court": "стадион", "garage": "гараж",
+            "lawn": "лужайка", "outdoor kitchen": "кухня",
+            "outdoor living space": "беседка", "pergola": "беседка", "pool": "бассейн",
+            "beamed ceiling": "", "carpet": "ковер", "ceiling fan": "потолочная вентиляция",
+            "coffered ceiling": "кессонный потолок",
+            "exposed bricks": "кирпичная кладка", "fireplace": "камин", "french_doors": "стеклянные двери",
+            "hardwood floor": "деревянный пол", "high ceiling": "высокий потолок", "kitchen_bar": "",
+            "kitchen island": "кухонный уголок",
+            "natural light": "естественный свет", "notable chandelier": "", "skylight": "",
+            "stainless_steel": "нержавеющая сталь",
+            "tile_floor": "плиточный пол", "vaulted_ceiling": "сводчатый потолок"}
     main_template = "Великолепные апартаменты в %s площадью %s м2 с %s гостиными и %s ванными комнатами.\
 %s %s %s %s %s %s %s\n\
 По любым вопросам обращайтесь по телефону %s, %s."
@@ -90,21 +101,22 @@ def make_description_ru(joined_features: set, living_features: set, kitchen_feat
     outside_set = {"deck", "dock", "hot tub", "sport court", "garage", "lawn", "outdoor kitchen",
                    "outdoor living space", "pergola", "pool"}
     outside_set &= joined_features
-    outside = ("Снаружи расположены %s." % (prettify_join(outside_set))) if len(outside_set) > 0 else ""
+    outside = ("Снаружи расположены %s." % (prettify_join(map(lambda x: toru[x], outside_set)))) if len(
+        outside_set) > 0 else ""
 
     view_set = {"mountain view", "water view"}
     view_set &= joined_features
-    view = ("Каждый день вы сможете наслаждаться волшебным %s." % (prettify_join(view_set))) if len(
-        view_set) > 0 else ""
+    view = "Каждый день вы сможете наслаждаться волшебным %s." % (
+        prettify_join(map(lambda x: toru[x], view_set))) if len(view_set) > 0 else ""
 
     condition = "Жилье %s, установлен кондиционер.\n" % (
         "было недавно отремонтировано" if params["renovated"] else "в хорошем состоянии")
 
-    living = "В гостиной находятся %s.\n" % (", ".join(living_features))
+    living = "В гостиной находятся %s.\n" % (prettify_join(map(lambda x: toru[x], living_features)))
     if len(living_features) == 0:
         living = ""
 
-    kitchen = "Кухня оборудована %s.\n" % (", ".join(kitchen_features))
+    kitchen = "Кухня оборудована %s.\n" % (prettify_join(map(lambda x: toru[x], kitchen_features)))
     if len(kitchen_features) == 0:
         kitchen = ""
 
