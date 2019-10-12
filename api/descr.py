@@ -42,14 +42,15 @@ def make_description(session_id: int, params: dict, photo_features: list, langua
 
     main_template = "This %s %s for rent is located %s. \
 The %s has floor area of %sm2 \
-including %s bedroom%s and %s %sbathroom%s%s.\
+including %s bedroom%s %sand %s %sbathroom%s%s.\
 %s%s%s%s%s%s%s%s\n%s \
 Tel.: %s, %s\n"
 
     mult_bedr = 's' if params["bedrooms"] != "1" else ''
     mult_bath = 's' if params["bathrooms"] != "1" else ''
+    conditioning = "with air conditioning " if params["air_conditioning"] else ""
     terrace = " and terrace" if params["terrace"] else ""
-    conditioning = " with air conditioning" if params["air_conditioning"] else ""
+
     outside_set = {"deck", "dock", "hot tub", "sport court", "garage", "lawn", "outdoor kitchen",
                    "outdoor living space", "pergola", "pool"}
     outside_set &= joined_features
@@ -71,14 +72,14 @@ Tel.: %s, %s\n"
     if len(kitchen_features) == 0:
         kitchen = ""
 
-    pets = "Living with pets is allowed." if params["pets"] else ""
+    pets = "Living with pets is allowed. " if params["pets"] else ""
     disabled = "Home is adapted for persons with reduced mobility." if params["disabled"] else ""
 
     return main_template % (
         adv1_words[adv1], params["type"], params["location"],
         params["type"], params["size"],
-        params["bedrooms"], mult_bedr, params["bathrooms"], adv_bath_words[adv_bath], mult_bath, terrace,
-        conditioning, outside, view, condition, living, kitchen, pets, disabled, goodbye_words[goodbye],
+        params["bedrooms"], mult_bedr, params["bathrooms"], adv_bath_words[adv_bath], conditioning, mult_bath, terrace,
+        outside, view, condition, living, kitchen, pets, disabled, goodbye_words[goodbye],
         params["phone"], params["name"])
 
 
