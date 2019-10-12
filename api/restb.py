@@ -1,9 +1,4 @@
 import requests
-import base64
-import urllib.request
-import tempfile
-import os
-import json
 
 root_url = 'https://api-eu.restb.ai/vision/v2/multipredict'
 client_key = '27fabe8d2131a451c5cc9b785568c9aa95911614153c31dbcf6dd3b9fe9b403d'
