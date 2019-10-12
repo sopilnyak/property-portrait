@@ -2,6 +2,7 @@ from flask import Flask, request
 import boto3
 from restb import get_rooms_info
 from collections import defaultdict
+from descr import make_description
 
 app = Flask(__name__)
 storage = {}
@@ -9,13 +10,6 @@ storage = {}
 s3_client = boto3.client('s3', aws_access_key_id='AKIA4ZL7FY35J7J32R64',
                          aws_secret_access_key='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')
 s3_bucket_name = 'property-portrait'
-
-
-def make_description(rooms_info):
-    if len(rooms_info) > 0:
-        return 'Property has a {} with {}'.format(rooms_info[0]['room_type'], ', '.join(rooms_info[0]['room_features']))
-    else:
-        return ''
 
 
 def group_by_types(image_urls, room_info):
@@ -66,7 +60,7 @@ def get_description():
 
         rooms_info = get_rooms_info(image_urls)
         types = group_by_types(image_urls, rooms_info)
-        return {'description': make_description(rooms_info),
+        return {'description': make_description(0, defaultdict(str, form), rooms_info),
                 'tip': get_tip(types.keys(), form),
                 'types': types}
 
@@ -74,7 +68,6 @@ def get_description():
 @app.route('/api/xml')
 def get_xml():
     description = request.json['description']
-
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 import random
 
 
-def get_description(session_id: int, params: dict, photo_features: list) -> str:
+def make_description(session_id: int, params: dict, photo_features: list) -> str:
     if session_id == 0:
         session_id += random.randint(0, 6)
         session_id += random.randint(0, 1) * 10
@@ -26,17 +26,17 @@ def get_description(session_id: int, params: dict, photo_features: list) -> str:
     living_features = set()
     room_features = set()
     for room in photo_features:
-        room_types |= room.room_type
-        room_features |= set(map(lambda x: x.replace("_", " "), room.room_features))
-        if room.room_type == "kitchen":
-            kitchen_features |= room.room_features
-        elif room.room_type == "bedroom" or room.room_type == "living_room":
-            living_features |= room.room_features
+        room_types.add(room["room_type"])
+        room_features |= set(map(lambda x: x.replace("_", " "), room["room_features"]))
+        if room["room_type"] == "kitchen":
+            kitchen_features |= set(room["room_features"])
+        elif room["room_type"] == "bedroom" or room["room_type"] == "living_room":
+            living_features |= set(room["room_features"])
     joined_features = room_types | room_features
 
     main_template = "This %s %s for rent is located %s. \
-The %s has floor area of %s including %d bedrooms%s, %d %sbathrooms %sand terrace. %s %s %s %s %s %s %s \
-Tel.: %d, %s\n"
+The %s has floor area of %s including %s bedrooms%s, %s %sbathrooms %sand terrace. %s %s %s %s %s %s %s \
+Tel.: %s, %s\n"
 
     conditioning = " with air conditioning" if params["air_conditioning"] else ""
     outside_set = {"deck", "dock", "hot_tub", "sport_court", "garage", "lawn", "outdoor_kitchen",
@@ -52,11 +52,11 @@ Tel.: %d, %s\n"
         "has been recently renovated" if params["renovated"] else "is in a perfect condition")
 
     living = "Our %sliving room has %s.\n" % (adv_living_words[adv_living], ", ".join(living_features))
-    if len(living_features == 0):
+    if len(living_features) == 0:
         living = ""
 
     kitchen = "The %skitchen is equipped with %s.\n" % (adv_kitchen_words[adv_kitchen], ", ".join(kitchen_features))
-    if len(kitchen_features == 0):
+    if len(kitchen_features) == 0:
         kitchen = ""
 
     pets = "Living with pets is allowed.\n" if params["pets"] else ""
