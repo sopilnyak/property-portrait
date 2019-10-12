@@ -88,12 +88,15 @@ def make_description_ru(joined_features: set, living_features: set, kitchen_feat
             "outdoor living space": "беседка", "pergola": "беседка", "pool": "бассейн",
             "beamed ceiling": "", "carpet": "ковер", "ceiling fan": "потолочная вентиляция",
             "coffered ceiling": "кессонный потолок",
-            "exposed bricks": "кирпичная кладка", "fireplace": "камин", "french_doors": "стеклянные двери",
-            "hardwood floor": "деревянный пол", "high ceiling": "высокий потолок", "kitchen_bar": "",
+            "exposed bricks": "кирпичная кладка", "fireplace": "камин", "french doors": "стеклянные двери",
+            "hardwood floor": "деревянный пол", "high ceiling": "высокий потолок", "kitchen bar": "кухонный бар",
             "kitchen island": "кухонный уголок",
             "natural light": "естественный свет", "notable chandelier": "", "skylight": "",
-            "stainless_steel": "нержавеющая сталь",
-            "tile_floor": "плиточный пол", "vaulted_ceiling": "сводчатый потолок"}
+            "stainless steel": "нержавеющая сталь",
+            "tile floor": "плиточный пол", "vaulted ceiling": "сводчатый потолок",
+            "dishwasher": "посудомоечная машина", "elevator": "лифт", "microwave": "микроволновая печь",
+            "oven": "духовой шкаф", "radiator": "батарея отопления", "refrigerator": "холодильник", "tv": "телевизор",
+            "wall mounted ac": "кондиционер", "washer  dryer": "сушилка", "water heater": "бойлер"}
     main_template = "Великолепные апартаменты в %s площадью %s м2 с %s гостиными и %s ванными комнатами.\
 %s %s %s %s %s %s %s\n\
 По любым вопросам обращайтесь по телефону %s, %s."
