@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import './styles.css';
+import React, { Component } from "react";
+import "./styles.css";
 
 class TextForm extends Component {
   constructor(props) {
@@ -8,18 +8,37 @@ class TextForm extends Component {
     this.state = {
       adText: "Ad text here",
       photoGroups: [
-        {room: 'Bedroom', photoKeys: ['https://via.placeholder.com/120', 'https://via.placeholder.com/80', 'https://via.placeholder.com/80'], key: 0},
-        {room: 'Bath', photoKeys: ['https://via.placeholder.com/120'], key: 1},
-        {room: 'Kitchen', photoKeys: ['https://via.placeholder.com/120', 'https://via.placeholder.com/80'], key: 2},
-      ],
+        {
+          room: "Bedroom",
+          photoKeys: [
+            "https://via.placeholder.com/120",
+            "https://via.placeholder.com/80",
+            "https://via.placeholder.com/80"
+          ],
+          key: 0
+        },
+        {
+          room: "Bath",
+          photoKeys: ["https://via.placeholder.com/120"],
+          key: 1
+        },
+        {
+          room: "Kitchen",
+          photoKeys: [
+            "https://via.placeholder.com/120",
+            "https://via.placeholder.com/80"
+          ],
+          key: 2
+        }
+      ]
     };
 
-        this.formChange = this.formChange.bind(this);
-    }
+    this.formChange = this.formChange.bind(this);
+  }
 
-    formChange = event => {
-        this.setState({adText: event.target.value});
-    };
+  formChange = event => {
+    this.setState({ adText: event.target.value });
+  };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -31,11 +50,14 @@ class TextForm extends Component {
 
     let xhr = new XMLHttpRequest();
     xhr.responseType = "json";
-    xhr.open("POST", "http://localhost:5000/api/description", true /*async*/);
+    xhr.open(
+      "POST",
+      "https://dae442f5.ngrok.io/api/description",
+      true /*async*/
+    );
     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-    let this_ = this;
-    xhr.onload = function() {
-      this_.setState({ adText: xhr.response.description });
+    xhr.onload = () => {
+      this.setState({ adText: xhr.response.description });
     };
     xhr.send(JSON.stringify({ form: json_data, image_keys: [] }));
   };
