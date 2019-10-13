@@ -63,10 +63,13 @@ class TextForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    this.uploadFile(event);
     const form = new FormData(event.target);
     let json_data = {};
     form.forEach(function(value, key) {
-      json_data[key] = value;
+      if (key != "file") {
+        json_data[key] = value;
+      }
     });
     this.setState({ form: json_data }, () => this.updateDescription());
   };
@@ -89,8 +92,7 @@ class TextForm extends Component {
       .then(function(response) {
         let keys = this_.state.imageKeys;
         keys.push(...response["image_keys"]);
-        this_.setState({ imageKeys: keys });
-        this_.updateDescription();
+        this_.setState({ imageKeys: keys }, () => this_.updateDescription());
       });
   };
 
@@ -103,14 +105,14 @@ class TextForm extends Component {
             <div className="photoForm">
               {this.state.photoGroups.map(item => PhotoGroup(item))}
             </div>
+            <form onSubmit={this.uploadFile} className="uploadForm">
+              <input type="file" name="file" multiple />
+              <input type="submit" value="Upload photos" />
+            </form>
           </div>
           <form onSubmit={this.handleSubmit}>
             <div className="infoForm">
               <div className="formColumn">
-                <form onSubmit={this.uploadFile}>
-                  <input type="file" name="file" multiple />
-                  <input type="submit" value="Upload photos" />
-                </form>
                 <input
                   name="name"
                   type="text"

@@ -153,6 +153,12 @@ hr {
   margin-top: 10px;
 }
 
+.uploadForm {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 95%;
+}
+
 .uploadPhotos {
   margin-top: 45px;
 }
