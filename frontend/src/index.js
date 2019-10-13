@@ -7,6 +7,7 @@ import './pages/Main';
 import MainRouter from './routes';
 import './index.css';
 
+
 const render = () =>
     ReactDOM.render(
             <BrowserRouter>
@@ -15,3 +16,5 @@ const render = () =>
         document.getElementById('root')
     );
 render();
+
+document.title = "Easy Sailor";
