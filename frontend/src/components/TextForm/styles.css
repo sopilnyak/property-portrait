@@ -1,5 +1,16 @@
 .bodyPart {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+.leftPart {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.descPart {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 input {
@@ -133,13 +144,13 @@ hr {
 }
 
 .formColumn {
-    padding: .5rem;
+  padding: 0.5rem;
 }
 
 .photoGroup {
   display: flex;
   align-items: center;
-  margin-top: -25px;
+  margin-top: 10px;
 }
 
 .photoForm {

@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 
 class ShareSN extends Component {
-    render() {
-        return (
-            <div>
-                <h1>Create your sale announcement!</h1>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <h1>Property Portrait</h1>
+      </div>
+    );
+  }
 }
 
 export default ShareSN;

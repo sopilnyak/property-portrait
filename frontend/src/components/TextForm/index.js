@@ -20,7 +20,7 @@ class TextForm extends Component {
     super(props);
 
     this.state = {
-      adText: "There will be your ad text",
+      adText: "Here will be your ad text...",
       photoGroups: [],
       imageKeys: [],
       form: {},
@@ -66,8 +66,7 @@ class TextForm extends Component {
     form.forEach(function(value, key) {
       json_data[key] = value;
     });
-    this.setState({ form: json_data });
-    this.updateDescription();
+    this.setState({ form: json_data }, () => this.updateDescription());
   };
 
   uploadFile = event => {
@@ -97,10 +96,19 @@ class TextForm extends Component {
     return (
       <div className="bodyPart">
         <main className="mainPart">
-          <p>{this.state.adText}</p>
+          <div className="leftPart">
+            <p className="descPart">{this.state.adText}</p>
+            <div className="photoForm">
+              {this.state.photoGroups.map(item => PhotoGroup(item))}
+            </div>
+          </div>
           <form onSubmit={this.handleSubmit}>
             <div className="infoForm">
               <div className="formColumn">
+                <form onSubmit={this.uploadFile}>
+                  <input type="file" name="file" />
+                  <input type="submit" value="Upload" />
+                </form>
                 <input
                   name="name"
                   type="text"
@@ -195,8 +203,8 @@ class TextForm extends Component {
               <div className="formColumn">
                 <input type="checkbox" name="terrace" className="single" />
                 Terrace <br />
-                <input type="checkbox" name="pets" className="single" /> Pets
-                allowed <br />
+                <input type="checkbox" name="pets" className="single" />
+                Pets allowed <br />
                 <input type="checkbox" name="disabled" className="single" />
                 Accessible <br />
                 <input type="checkbox" name="renovated" className="single" />
@@ -221,9 +229,6 @@ class TextForm extends Component {
             <input type="submit" value="Generate!" />
           </form>
         </main>
-        <div className="photoForm">
-          {this.state.photoGroups.map(item => PhotoGroup(item))}
-        </div>
       </div>
     );
   }
