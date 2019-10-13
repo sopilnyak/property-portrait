@@ -7,7 +7,6 @@ def make_description(session_id: int, params: dict, photo_features: list, langua
     if (len(params["location"]) == 0 or
             len(params["name"]) == 0 or
             len(params["phone"]) == 0 or
-            len(params["price"]) == 0 or
             len(params["size"]) == 0):
         return 0, "Here will be your ad text..."
 
@@ -47,10 +46,10 @@ def make_description(session_id: int, params: dict, photo_features: list, langua
         return make_description_ru(session_id, joined_features, living_features, kitchen_features, params)
 
     main_template = "This %s %s for rent is located %s. \
-The %s has floor area of %sm2 including %s. \
+The %s has floor area of %s including %s. \
 %s%s%s%s%s\n\
 %s%s%s\n%s \
-Tel.: %s, %s.\n"
+Price: %s. Tel.: %s, %s.\n"
 
     rooms = [params["bedrooms"], params["bathrooms"]]
     rooms[0] += " bedroom"
@@ -101,12 +100,14 @@ Tel.: %s, %s.\n"
     pets = "Living with pets is allowed. " if params["pets"] else ""
     disabled = "Home is adapted for persons with reduced mobility." if params["disabled"] else ""
 
+    price = "Price: " + params["price"] + ". " if len(params["price"]) > 0 else "Call for price. "
+
     return (session_id, main_template % (
         adv1_words[adv1], params["type"], params["location"],
         params["type"], params["size"], rooms,
         outside, view, condition, living, kitchen,
         facilities, pets, disabled, goodbye_words[goodbye],
-        params["phone"], params["name"]))
+        price, params["phone"], params["name"]))
 
 
 def make_description_ru(session_id: int, joined_features: set, living_features: set, kitchen_features: set,

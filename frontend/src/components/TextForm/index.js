@@ -10,7 +10,7 @@ const PhotoGroup = ({ room, image_urls }) => {
       <h3>{room}</h3>
       <div className="scrollmenu">
         {image_urls.map(item => (
-          <img className="roomImg" src={item} />
+          <img className="roomImg" alt="Uploaded picture" src={item} />
         ))}
       </div>
       <hr />
@@ -78,10 +78,10 @@ class TextForm extends Component {
     let json_data = {};
     let lang = {};
     form.forEach(function(value, key) {
-      if (key != "file") {
+      if (key !== "file") {
         json_data[key] = value;
       }
-      if (key == "lang") {
+      if (key === "lang") {
         lang = value;
       }
     });
@@ -119,9 +119,9 @@ class TextForm extends Component {
       <div className="bodyPart">
         <main className="mainPart">
           <div className="leftPart">
-            <p className="descPart">
-                {this.state.isLoading ? <img src={process.env.PUBLIC_URL + "/loading.gif"} /> : parts.map(x => this.pForm(x))}
-            </p>
+            <div className="descPart">
+                {this.state.isLoading ? <img src={process.env.PUBLIC_URL + "/loading.gif"} alt={"loading..."} /> : parts.map(x => this.pForm(x))}
+            </div>
             <div className="photoForm">
               {this.state.photoGroups.map(item => PhotoGroup(item))}
             </div>
