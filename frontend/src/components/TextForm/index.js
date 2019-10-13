@@ -43,6 +43,7 @@ class TextForm extends Component {
       imageKeys: [],
       form: {},
       sessionId: 0,
+        lang: "en",
         isLoading: false
     };
 
