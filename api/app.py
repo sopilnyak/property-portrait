@@ -81,20 +81,23 @@ def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
             return redirect(request.url)
-        file = request.files['file']
-        if file.filename == '':
+        files = request.files.getlist('file')
+        if len(files) == 0:
             return redirect(request.url)
-        if file:
-            filename = secure_filename(file.filename)
-            filename = '{base}-{uuid}{extension}'.format(
-                base=os.path.splitext(filename)[0],
-                uuid=str(uuid.uuid4()),
-                extension=os.path.splitext(filename)[1]
-            )
-            if not os.path.exists('static'):
-                os.makedirs('static')
-            file.save(os.path.join('static', filename))
-            return {'image_key': filename}
+        if files:
+            filenames = []
+            for file in files:
+                filename = secure_filename(file.filename)
+                filename = '{base}-{uuid}{extension}'.format(
+                    base=os.path.splitext(filename)[0],
+                    uuid=str(uuid.uuid4()),
+                    extension=os.path.splitext(filename)[1]
+                )
+                if not os.path.exists('static'):
+                    os.makedirs('static')
+                file.save(os.path.join('static', filename))
+                filenames.append(filename)
+            return {'image_keys': filenames}
 
 
 @app.route('/api/image/<string:name>')

@@ -28,7 +28,8 @@ class TextForm extends Component {
       photoGroups: [],
       imageKeys: [],
       form: {},
-      sessionId: 0
+      sessionId: 0,
+        isLoading: false
     };
 
     adText=this.state.adText;
@@ -53,17 +54,19 @@ class TextForm extends Component {
       this.setState({
         adText: xhr.response.description,
         photoGroups: xhr.response.types,
-        sessionId: xhr.response.session_id
+        sessionId: xhr.response.session_id,
+          isLoading: false
       });
       adText=this.state.adText;
     };
+    this.setState({isLoading: true},
     xhr.send(
       JSON.stringify({
         form: this.state.form,
         image_keys: this.state.imageKeys,
         session_id: this.state.sessionId
       })
-    );
+    ));
   }
 
   handleSubmit = event => {
@@ -93,18 +96,24 @@ class TextForm extends Component {
       })
       .then(function(response) {
         let keys = this_.state.imageKeys;
-        keys.push(response["image_key"]);
+        keys.push(...response["image_keys"]);
         this_.setState({ imageKeys: keys });
         this_.updateDescription();
       });
   };
 
+  pForm = adPart => (<p className={"adP"}>{ adPart }</p>);
+
   render() {
+    let parts = this.state.adText.split('\n');
+
     return (
       <div className="bodyPart">
         <main className="mainPart">
           <div className="leftPart">
-            <p className="descPart">{this.state.adText}</p>
+            <p className="descPart">
+                {this.state.isLoading ? <img src={process.env.PUBLIC_URL + "/loading.gif"} /> : parts.map(x => this.pForm(x))}
+            </p>
             <div className="photoForm">
               {this.state.photoGroups.map(item => PhotoGroup(item))}
             </div>
@@ -113,7 +122,7 @@ class TextForm extends Component {
             <div className="infoForm">
               <div className="formColumn">
                 <form onSubmit={this.uploadFile}>
-                  <input type="file" name="file" />
+                  <input type="file" name="file" multiple />
                   <input type="submit" value="Upload photos" />
                 </form>
                 <input

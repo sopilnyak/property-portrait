@@ -11,6 +11,9 @@
 .descPart {
   width: 95%;
   box-sizing: border-box;
+  font-size: 20px;
+  padding: 40px;
+  border: 2px solid #4caf50;
 }
 
 input {
@@ -97,14 +100,6 @@ select {
   width: 35%;
   font-size: 20px;
   margin-top: -30px;
-}
-
-p {
-  width: 35%;
-  margin-top: 25px;
-  font-size: 20px;
-  padding: 40px;
-  border: 2px solid #4caf50;
 }
 
 font {
