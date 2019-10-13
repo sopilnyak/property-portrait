@@ -94,12 +94,18 @@ class TextForm extends Component {
       });
   };
 
+  pForm = adPart => (<p className={"adP"}>{ adPart }</p>);
+
   render() {
+    let parts = this.state.adText.split('\n');
+
     return (
       <div className="bodyPart">
         <main className="mainPart">
           <div className="leftPart">
-            <p className="descPart">{this.state.adText}</p>
+            <p className="descPart">
+                {parts.map(x => this.pForm(x))}
+            </p>
             <div className="photoForm">
               {this.state.photoGroups.map(item => PhotoGroup(item))}
             </div>

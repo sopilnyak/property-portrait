@@ -40,7 +40,7 @@ def make_description(session_id: int, params: dict, photo_features: list, langua
         return make_description_ru(session_id, joined_features, living_features, kitchen_features, params)
 
     main_template = "This %s %s for rent is located %s. \
-The %s has floor area of %sm2 including %s.\
+The %s has floor area of %sm2 including %s. \
 %s%s%s%s%s\n\
 %s%s%s\n%s \
 Tel.: %s, %s.\n"
@@ -61,11 +61,11 @@ Tel.: %s, %s.\n"
     outside_set = {"deck", "dock", "hot tub", "sport court", "garage", "lawn", "outdoor kitchen",
                    "outdoor living space", "pergola", "pool"}
     outside_set &= joined_features
-    outside = ("Outside you will find %s." % (prettify_join(outside_set))) if len(outside_set) > 0 else ""
+    outside = ("Outside you will find %s. " % (prettify_join(outside_set))) if len(outside_set) > 0 else ""
 
     view_set = {"mountain view", "water view"}
     view_set &= joined_features
-    view = ("In addition, you can enjoy the magnificent %s every day." % (prettify_join(view_set))) if len(
+    view = ("In addition, you can enjoy the magnificent %s every day. " % (prettify_join(view_set))) if len(
         view_set) > 0 else ""
 
     condition = "The property %s.\n" % (
