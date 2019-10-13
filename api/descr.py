@@ -4,6 +4,13 @@ from tools import prettify_join
 
 
 def make_description(session_id: int, params: dict, photo_features: list, language="en") -> Tuple[int, str]:
+    if (len(params["location"]) == 0 or
+            len(params["name"]) == 0 or
+            len(params["phone"]) == 0 or
+            len(params["price"]) == 0 or
+            len(params["size"]) == 0):
+        return 0, "Here will be your ad text..."
+
     if session_id == 0:
         session_id += random.randint(0, 6)
         session_id += random.randint(0, 1) * 10
