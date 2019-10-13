@@ -11,9 +11,7 @@ class FinalPage extends Component {
     constructor(props) {
         super(props);
 
-        this.state={
-            adText: adText,
-        };
+        this.state={adText};
 
         this.handleChange = this.handleChange.bind(this);
     }
