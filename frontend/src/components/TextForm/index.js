@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Alert } from "reactstrap";
 import "./styles.css";
 
 const PhotoGroup = ({ room, image_urls }) => {
@@ -20,6 +21,7 @@ class TextForm extends Component {
     super(props);
 
     this.state = {
+      warningText: "",
       adText: "Here will be your ad text...",
       photoGroups: [],
       imageKeys: [],
@@ -107,13 +109,14 @@ class TextForm extends Component {
               <div className="formColumn">
                 <form onSubmit={this.uploadFile}>
                   <input type="file" name="file" />
-                  <input type="submit" value="Upload" />
+                  <input type="submit" value="Upload photos" />
                 </form>
                 <input
                   name="name"
                   type="text"
                   id="name"
                   placeholder="John Biene"
+                  required
                 />
                 <br />
                 <input
@@ -121,6 +124,7 @@ class TextForm extends Component {
                   type="text"
                   id="phone"
                   placeholder="+34 123 456 7890"
+                  required
                 />
                 <br />
                 <input
@@ -128,9 +132,16 @@ class TextForm extends Component {
                   type="text"
                   id="location"
                   placeholder="at HackUPC, Barcelona..."
+                  required
                 />
                 <br />
-                <input name="size" type="text" id="size" placeholder="100 m2" />
+                <input
+                  name="size"
+                  type="text"
+                  id="size"
+                  placeholder="100 m2"
+                  required
+                />
                 <br />
                 <input
                   name="price"
@@ -226,6 +237,9 @@ class TextForm extends Component {
                 </div>
               </div>
             </div>
+            {this.state.warningText.length > 0 && (
+              <Alert color="danger">{this.state.warningText}</Alert>
+            )}
             <input type="submit" value="Generate!" />
           </form>
         </main>
