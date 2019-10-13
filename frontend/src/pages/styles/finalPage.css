@@ -1,0 +1,24 @@
+font {
+    color: #222222;
+}
+
+.finalPage {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+}
+
+.RedactedText {
+    padding-top: 170px;
+    padding-bottom: 30px;
+}
+
+textarea {
+    padding: 40px;
+    font-size: 24px;
+}
+
+.shareSN {
+    padding-top: 170px;
+}

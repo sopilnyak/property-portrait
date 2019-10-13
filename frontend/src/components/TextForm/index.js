@@ -1,15 +1,18 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
+import 'bootstrap/dist/css/bootstrap.css';
+import {Alert} from 'reactstrap';
+
 import "./styles.css";
 
-const PhotoGroup = ({room, photoKeys}) => {
+const PhotoGroup = ({room, image_urls}) => {
   return (
       <div className="photoGroup">
-        <h3>{room}</h3>
-        <div className="scrollmenu">
-          {photoKeys.map(item =>
-              (<img className="roomImg" src={item}/>))}
-        </div>
-        <hr />
+          <h3>{room}</h3>
+          <div className="scrollmenu">
+            {image_urls.map(item =>
+                (<img className="roomImg" src={item}/>))}
+          </div>
+          <hr />
       </div>
   )
 };
@@ -19,8 +22,9 @@ class TextForm extends Component {
     super(props);
 
     this.state = {
+      warningText: '',
       adText: "Ad text here",
-      photoGroups: []
+      photoGroups: [],
     };
 
     this.formChange = this.formChange.bind(this);
@@ -47,9 +51,11 @@ class TextForm extends Component {
     );
     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
     xhr.onload = () => {
+      console.log(xhr.response.description);
       this.setState({ adText: xhr.response.description });
-      console.log(xhr.response.types);
+      console.log(xhr.response);
       this.setState({ photoGroups: xhr.response.types });
+      this.setState({ warningText: xhr.response.tip });
     };
     xhr.send(
       JSON.stringify({
@@ -158,7 +164,7 @@ class TextForm extends Component {
               />{" "}
               Air conditioning <br />
               <div className="nearby">
-                Nearby <br />
+                <h4>Nearby</h4>
                 <input
                   type="checkbox"
                   name="transport"
@@ -173,13 +179,24 @@ class TextForm extends Component {
                   className="single"
                 /> Shops <br />
               </div>
+              <div className="uploadPhotos">
+                <h4>Upload photos</h4>
+                <input type='file' />
+              </div>
             </div>
           </div>
+          {this.state.warningText.length > 0 &&
+          <Alert color="danger">
+            {this.state.warningText}
+          </Alert>
+          }
           <input type="submit" value="Submit" />
         </form>
         </main>
           <div className="photoForm">
-            {this.state.photoGroups.map((item) => PhotoGroup(item))}
+            {this.state.photoGroups.length > 0 &&
+              this.state.photoGroups.map(item => PhotoGroup(item))
+            }
           </div>
   </div>
     );

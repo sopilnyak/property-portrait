@@ -47,7 +47,7 @@ label {
     display: inline-block;
     cursor: pointer;
     font-weight: bold;
-    padding: 5px 20px;
+    padding: 5px 15px;
 }
 
 input[type=radio]:checked + label{
@@ -107,6 +107,7 @@ font {
 
 .roomImg {
     margin-left: 10px;
+    height: 120px;
 }
 
 h3 {
@@ -133,6 +134,14 @@ hr {
 
 .photoForm {
     margin-top: -50px;
+}
+
+h4 {
+    margin-bottom: 0;
+}
+
+input[type='file'] {
+    margin-top: 10px;
 }
 
 @import url('https://fonts.googleapis.com/css?family=Roboto');
