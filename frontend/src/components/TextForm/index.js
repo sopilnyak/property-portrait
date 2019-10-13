@@ -88,7 +88,7 @@ class TextForm extends Component {
       })
       .then(function(response) {
         let keys = this_.state.imageKeys;
-        keys.push(response["image_key"]);
+        keys.push(...response["image_keys"]);
         this_.setState({ imageKeys: keys });
         this_.updateDescription();
       });
@@ -108,7 +108,7 @@ class TextForm extends Component {
             <div className="infoForm">
               <div className="formColumn">
                 <form onSubmit={this.uploadFile}>
-                  <input type="file" name="file" />
+                  <input type="file" name="file" multiple />
                   <input type="submit" value="Upload photos" />
                 </form>
                 <input
