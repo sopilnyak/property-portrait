@@ -1,147 +1,153 @@
+.bodyPart {
+    margin-bottom: 2rem;
+}
+
 input {
-    font-size: 18px;
+  font-size: 18px;
 }
 
-input[type=text], select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+input[type="text"],
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-input[type=submit] {
-    width: 100%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+input[type="submit"] {
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-input[type=submit]:hover {
-    background-color: #45a049;
+input[type="submit"]:hover {
+  background-color: #45a049;
 }
 
-div {
+/*div {
     border-radius: 5px;
     background-color: #f2f2f2;
     margin: 10px;
-}
+}*/
 
 .infoForm {
-    display: flex;
+  display: flex;
 }
 
-input[type=radio] {
-    position: absolute;
-    visibility: hidden;
-    display: none;
+input[type="radio"] {
+  position: absolute;
+  visibility: hidden;
+  display: none;
 }
 
 label {
-    display: inline-block;
-    cursor: pointer;
-    font-weight: bold;
-    padding: 5px 15px;
+  display: inline-block;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 5px 20px;
 }
 
-input[type=radio]:checked + label{
-    background: #4CAF50;;
+input[type="radio"]:checked + label {
+  background: #4caf50;
 }
 
-label + input[type=radio] + label {
-    border-left: solid #4CAF50;
+label + input[type="radio"] + label {
+  border-left: solid #4caf50;
 }
 .radio-group {
-    border: solid #4CAF50;
-    display: inline-block;
-    border-radius: 10px;
-    overflow: hidden;
+  border: solid #4caf50;
+  display: inline-block;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .single {
-    margin: 10px 5px 0;
-    font-size: 20px;
+  margin: 10px 5px 0;
+  font-size: 20px;
 }
 
 .nearby {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 select {
-    background: rgb(232, 240, 254);
+  background: rgb(232, 240, 254);
 }
 
 .textForm {
-    width: 35%;
-    font-size: 20px;
-    margin-top: -30px;
+  width: 35%;
+  font-size: 20px;
+  margin-top: -30px;
 }
 
 p {
-    width: 35%;
-    margin-top: 25px;
-    font-size: 20px;
-    padding: 40px;
-    border: 2px solid #4CAF50;
+  width: 35%;
+  margin-top: 25px;
+  font-size: 20px;
+  padding: 40px;
+  border: 2px solid #4caf50;
 }
 
 font {
-    color: #222222;
+  color: #222222;
 }
 
 .mainPart {
-    position: relative;
-    padding-top: 10em;
+  position: relative;
+  padding-top: 10em;
 
-    display: flex;
-    justify-content: space-evenly;
-    align-items: flex-start;
-
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
 }
 
 .roomImg {
-    margin-left: 10px;
-    height: 120px;
+  margin-left: 10px;
+  width: 200px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 h3 {
-    font-size: 32px;
-    font-weight: bold;
-    color: #4CAF50;
-    width: 150px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #4caf50;
+  width: 150px;
 }
 
 hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-bottom: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+.formColumn {
+    padding: .5rem;
 }
 
 .photoGroup {
-    display: flex;
-    align-items: center;
-    margin-top: -25px;
+  display: flex;
+  align-items: center;
+  margin-top: -25px;
 }
 
-.photoForm {
-    margin-top: -50px;
+.uploadPhotos {
+  margin-top: 45px;
 }
 
-h4 {
-    margin-bottom: 0;
+input[type="file"] {
+  margin-top: 7px;
 }
 
-input[type='file'] {
-    margin-top: 10px;
-}
-
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url("https://fonts.googleapis.com/css?family=Roboto");

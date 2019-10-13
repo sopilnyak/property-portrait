@@ -1,22 +1,25 @@
-from flask import Flask, request
+from flask import Flask, request, redirect, send_from_directory
 import boto3
 from restb import get_rooms_info
 from collections import defaultdict
 from tools import prettify_join
 from descr import make_description
+from werkzeug.utils import secure_filename
+import os
+import uuid
 
 app = Flask(__name__)
 storage = {}
 
-s3_client = boto3.client('s3', aws_access_key_id='AKIA4ZL7FY35J7J32R64',
-                         aws_secret_access_key='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')
+s3_client = boto3.client('s3', aws_access_key_id='AKIA4ZL7FY35EGYZBTFG',
+                         aws_secret_access_key='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')
 s3_bucket_name = 'property-portrait'
 
 
 def group_by_types(image_urls, room_info):
     types = defaultdict(list)
     for image_url, info in zip(image_urls, room_info):
-        types[info['room_type'].capitalize()].append(image_url)
+        types[info['room_type'].replace('_', ' ').capitalize()].append(image_url)
     result = []
     for type, urls in types.items():
         result.append({'room': type, 'image_urls': urls})
@@ -49,16 +52,15 @@ def get_description():
     if request.method == 'POST':
         form = request.json['form']
         image_keys = request.json['image_keys']
-        bucket_location = s3_client.get_bucket_location(Bucket=s3_bucket_name)
-        image_urls = ['https://s3-{0}.amazonaws.com/{1}/{2}'.format(
-            bucket_location['LocationConstraint'], s3_bucket_name, key)
-            for key in image_keys]
-
+        session_id = request.json['session_id']
+        image_urls = ['https://dae442f5.ngrok.io/api/image/' + key for key in image_keys]
         rooms_info = get_rooms_info(image_urls)
         types = group_by_types(image_urls, rooms_info)
-        return {'description': make_description(0, defaultdict(str, form), rooms_info, language='en'),
+        session_id, desc = make_description(session_id, defaultdict(str, form), rooms_info, language='en')
+        return {'description': desc,
                 'tip': get_tip([t['room'] for t in types], form),
-                'types': types}
+                'types': types,
+                'session_id': session_id}
 
 
 @app.after_request
@@ -72,6 +74,32 @@ def after_request(response):
 @app.route('/api/xml')
 def get_xml():
     description = request.json['description']
+
+
+@app.route('/api/upload', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            return redirect(request.url)
+        if file:
+            filename = secure_filename(file.filename)
+            filename = '{base}-{uuid}{extension}'.format(
+                base=os.path.splitext(filename)[0],
+                uuid=str(uuid.uuid4()),
+                extension=os.path.splitext(filename)[1]
+            )
+            if not os.path.exists('static'):
+                os.makedirs('static')
+            file.save(os.path.join('static', filename))
+            return {'image_key': filename}
+
+
+@app.route('/api/image/<string:name>')
+def get_image(name):
+    return send_from_directory('static', name)
 
 
 if __name__ == '__main__':
