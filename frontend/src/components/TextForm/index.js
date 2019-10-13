@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component, useState} from "react";
 import {Alert} from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles.css";
@@ -17,6 +17,18 @@ const PhotoGroup = ({ room, image_urls }) => {
       </div>
       <hr />
     </div>
+  );
+};
+
+const AlertWarning = ({text}) => {
+  const [visible, setVisible] = useState(true);
+
+  const onDismiss = () => setVisible(false);
+
+  return (
+      <Alert color="warning" isOpen={visible} toggle={onDismiss}>
+        {text}
+      </Alert>
   );
 };
 
@@ -284,7 +296,7 @@ class TextForm extends Component {
               </div>
             </div>
             {this.state.warningText.length > 0 && (
-              <Alert color="warning">{this.state.warningText}</Alert>
+              <AlertWarning text={this.state.warningText}/>
             )}
             <input type="submit" value="Generate!" />
           </form>
