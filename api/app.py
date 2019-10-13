@@ -53,10 +53,11 @@ def get_description():
         form = request.json['form']
         image_keys = request.json['image_keys']
         session_id = request.json['session_id']
+        lang = request.json['lang']
         image_urls = ['https://dae442f5.ngrok.io/api/image/' + key for key in image_keys]
         rooms_info = get_rooms_info(image_urls)
         types = group_by_types(image_urls, rooms_info)
-        session_id, desc = make_description(session_id, defaultdict(str, form), rooms_info, language='en')
+        session_id, desc = make_description(session_id, defaultdict(str, form), rooms_info, language=lang)
         return {'description': desc,
                 'tip': get_tip([t['room'] for t in types], form),
                 'types': types,

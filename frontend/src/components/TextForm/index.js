@@ -55,6 +55,7 @@ class TextForm extends Component {
         adText: xhr.response.description,
         photoGroups: xhr.response.types,
         sessionId: xhr.response.session_id,
+          lang: "en",
           isLoading: false
       });
       adText=this.state.adText;
@@ -64,7 +65,8 @@ class TextForm extends Component {
       JSON.stringify({
         form: this.state.form,
         image_keys: this.state.imageKeys,
-        session_id: this.state.sessionId
+        session_id: this.state.sessionId,
+          lang: this.state.lang
       })
     ));
   }
@@ -74,12 +76,16 @@ class TextForm extends Component {
     this.uploadFile(event);
     const form = new FormData(event.target);
     let json_data = {};
+    let lang = {};
     form.forEach(function(value, key) {
       if (key != "file") {
         json_data[key] = value;
       }
+      if (key == "lang") {
+        lang = value;
+      }
     });
-    this.setState({ form: json_data }, () => this.updateDescription());
+    this.setState({ form: json_data, lang }, () => this.updateDescription());
   };
 
   uploadFile = event => {
@@ -223,6 +229,25 @@ class TextForm extends Component {
                     value="3"
                   />
                   <label htmlFor="three-bathroom">3</label>
+                </div>
+                <br />
+                <br />
+                <div className="radio-group">
+                  <input
+                    type="radio"
+                    id="eng"
+                    name="lang"
+                    value="en"
+                    defaultChecked
+                  />
+                  <label htmlFor="eng">in English</label>
+                  <input
+                    type="radio"
+                    id="ru"
+                    name="lang"
+                    value="ru"
+                  />
+                  <label htmlFor="ru">in Russian</label>
                 </div>
                 <br />
               </div>
