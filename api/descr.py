@@ -48,7 +48,7 @@ def make_description(session_id: int, params: dict, photo_features: list, langua
     main_template = "This %s %s for rent is located %s. \
 The %s has floor area of %s including %s. \
 %s%s%s%s%s\n\
-%s%s%s\n%s \
+%s%s%s\n%s\n\
 %s. Tel.: %s, %s.\n"
 
     rooms = [params["bedrooms"], params["bathrooms"]]
