@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {FacebookShareButton, TwitterShareButton, GooglePlusShareButton} from "react-simple-share";
 
-import {adText} from './../components/TextForm';
+import {adText, photoGroups} from './../components/TextForm';
 
 import Header from "./../components/Header";
 import Footer from "./../components/Footer";
@@ -11,7 +11,7 @@ class FinalPage extends Component {
     constructor(props) {
         super(props);
 
-        this.state={adText};
+        this.state={adText, photoGroups};
 
         this.handleChange = this.handleChange.bind(this);
     }

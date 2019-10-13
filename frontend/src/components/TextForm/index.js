@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { Alert } from "reactstrap";
+import {Alert} from "reactstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles.css";
 
 export var adText;
+export var photoGroups;
 
 const PhotoGroup = ({ room, image_urls }) => {
   return (
@@ -33,6 +35,7 @@ class TextForm extends Component {
     };
 
     adText=this.state.adText;
+    photoGroups=this.state.photoGroups;
 
     this.formChange = this.formChange.bind(this);
   }
@@ -54,11 +57,13 @@ class TextForm extends Component {
       this.setState({
         adText: xhr.response.description,
         photoGroups: xhr.response.types,
+        warningText: xhr.response.tip,
         sessionId: xhr.response.session_id,
           lang: "en",
           isLoading: false
       });
       adText=this.state.adText;
+      photoGroups=this.state.photoGroups;
     };
     this.setState({isLoading: true},
     xhr.send(
@@ -279,7 +284,7 @@ class TextForm extends Component {
               </div>
             </div>
             {this.state.warningText.length > 0 && (
-              <Alert color="danger">{this.state.warningText}</Alert>
+              <Alert color="warning">{this.state.warningText}</Alert>
             )}
             <input type="submit" value="Generate!" />
           </form>
