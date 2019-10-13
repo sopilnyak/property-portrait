@@ -1,9 +1,12 @@
-from flask import Flask, request
+from flask import Flask, request, redirect
 import boto3
 from restb import get_rooms_info
 from collections import defaultdict
 from tools import prettify_join
 from descr import make_description
+from werkzeug.utils import secure_filename
+import os
+import uuid
 
 app = Flask(__name__)
 storage = {}
@@ -56,7 +59,7 @@ def get_description():
 
         rooms_info = get_rooms_info(image_urls)
         types = group_by_types(image_urls, rooms_info)
-        return {'description': make_description(0, defaultdict(str, form), rooms_info, language='en'),
+        return {'description': make_description(1, defaultdict(str, form), rooms_info, language='en'),
                 'tip': get_tip([t['room'] for t in types], form),
                 'types': types}
 
@@ -72,6 +75,25 @@ def after_request(response):
 @app.route('/api/xml')
 def get_xml():
     description = request.json['description']
+
+
+@app.route('/api/upload', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            return redirect(request.url)
+        if file:
+            filename = secure_filename(file.filename)
+            filename = '{base}-{uuid}{extension}'.format(
+                base=os.path.splitext(filename)[0],
+                uuid=str(uuid.uuid4()),
+                extension=os.path.splitext(filename)[1]
+            )
+            s3_client.upload_fileobj(file, 'property-portrait', filename)
+            return {'image_key': filename}
 
 
 if __name__ == '__main__':

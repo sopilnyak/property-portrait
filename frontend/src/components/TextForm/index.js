@@ -6,8 +6,10 @@ class TextForm extends Component {
     super(props);
 
     this.state = {
-      adText: "Ad text here",
-      photoGroups: []
+      adText: "There will be your ad text",
+      photoGroups: [],
+      imageKeys: [],
+      form: {}
     };
 
     this.formChange = this.formChange.bind(this);
@@ -17,14 +19,7 @@ class TextForm extends Component {
     this.setState({ adText: event.target.value });
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    const form = new FormData(event.target);
-    let json_data = {};
-    form.forEach(function(value, key) {
-      json_data[key] = value;
-    });
-
+  updateDescription() {
     let xhr = new XMLHttpRequest();
     xhr.responseType = "json";
     xhr.open(
@@ -35,20 +30,57 @@ class TextForm extends Component {
     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
     xhr.onload = () => {
       this.setState({ adText: xhr.response.description });
-      console.log(xhr.response.types);
       this.setState({ photoGroups: xhr.response.types });
     };
     xhr.send(
       JSON.stringify({
-        form: json_data,
-        image_keys: ["flat1.jpg", "flat2.jpg"]
+        form: this.state.form,
+        image_keys: this.state.imageKeys
       })
     );
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+    const form = new FormData(event.target);
+    let json_data = {};
+    form.forEach(function(value, key) {
+      json_data[key] = value;
+    });
+    this.setState({ form: json_data });
+    this.updateDescription();
+  };
+
+  uploadFile = event => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    console.log(formData.entries);
+    let this_ = this;
+    fetch("https://dae442f5.ngrok.io/api/upload", {
+      method: "POST",
+      body: formData
+    })
+      .then(function(response) {
+        console.log(response);
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(function(response) {
+        let keys = this_.state.imageKeys;
+        keys.push(response["image_key"]);
+        this_.setState({ imageKeys: keys });
+        this_.updateDescription();
+      });
   };
 
   render() {
     return (
       <div>
+        <form onSubmit={this.uploadFile}>
+          <input name="file" id="file" type="file" />
+          <input type="submit" value="Upload" />
+        </form>
         <form onSubmit={this.handleSubmit}>
           <div className="infoForm">
             <div className="secondColumn">
