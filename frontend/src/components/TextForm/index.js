@@ -67,35 +67,43 @@ class TextForm extends Component {
 
         <form onSubmit={this.handleSubmit}>
           <div className="infoForm">
-            <div className="secondColumn">
+            <div className="formColumn">
               <input
                 name="name"
                 type="text"
                 id="name"
-                placeholder="Full name"
-              />{" "}
-              <br />
-              <input
-                name="location"
-                type="text"
-                id="location"
-                placeholder="Location"
-              />{" "}
-              <br />
-              <input
-                name="size"
-                type="text"
-                id="size"
-                placeholder="Area"
+                placeholder="John Biene"
               />{" "}
               <br />
               <input
                 name="phone"
                 type="text"
                 id="phone"
-                placeholder="Phone"
+                placeholder="+34 123 456 7890"
               />{" "}
               <br />
+              <input
+                name="location"
+                type="text"
+                id="location"
+                placeholder="at HackUPC, Barcelona..."
+              />{" "}
+              <br />
+              <input
+                name="size"
+                type="text"
+                id="size"
+                placeholder="100 m2"
+              />{" "}
+              <br />
+              <input
+                name="price"
+                type="text"
+                id="price"
+                placeholder="1000 €/month"
+              />{" "}
+              <br />
+
               <select id="type" name="type" placeholder="Type">
                 {" "}
                 <br />
@@ -107,7 +115,7 @@ class TextForm extends Component {
               <br />
               Bedrooms <br />
               <div className="radio-group">
-                <input type="radio" id="one-room" name="bedrooms" value="1" />
+                <input type="radio" id="one-room" name="bedrooms" value="1" defaultChecked />
                 <label htmlFor="one-room">1</label>
                 <input type="radio" id="two-room" name="bedrooms" value="2" />
                 <label htmlFor="two-room">2</label>
@@ -122,6 +130,7 @@ class TextForm extends Component {
                   id="one-bathroom"
                   name="bathrooms"
                   value="1"
+                  defaultChecked
                 />
                 <label htmlFor="one-bathroom">1</label>
                 <input
@@ -140,11 +149,11 @@ class TextForm extends Component {
                 <label htmlFor="three-bathroom">3</label>
               </div>{" "}
               <br />
-              <input type="checkbox" name="terrace" className="single" />{" "}
-              Terrace <br />
             </div>
 
-            <div className="secondColumn">
+            <div className="formColumn">
+              <input type="checkbox" name="terrace" className="single" />{" "}
+              Terrace <br />
               <input type="checkbox" name="pets" className="single" /> Pets
               allowed <br />
               <input type="checkbox" name="disabled" className="single" />{" "}
@@ -175,7 +184,7 @@ class TextForm extends Component {
               </div>
             </div>
           </div>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Generate!" />
         </form>
         </main>
           <div className="photoForm">

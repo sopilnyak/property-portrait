@@ -11,7 +11,7 @@ class Button extends Component {
                 <button
                     className="button"
                 >
-                    Continue
+                    Finalize
                 </button>
             </Link>
         );

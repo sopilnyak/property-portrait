@@ -125,6 +125,10 @@ hr {
     padding: 0;
 }
 
+.formColumn {
+    padding: .5rem;
+}
+
 .photoGroup {
     display: flex;
     align-items: center;
