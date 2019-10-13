@@ -49,7 +49,7 @@ def make_description(session_id: int, params: dict, photo_features: list, langua
 The %s has floor area of %s including %s. \
 %s%s%s%s%s\n\
 %s%s%s\n%s \
-Price: %s. Tel.: %s, %s.\n"
+%s. Tel.: %s, %s.\n"
 
     rooms = [params["bedrooms"], params["bathrooms"]]
     rooms[0] += " bedroom"
