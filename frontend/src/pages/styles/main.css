@@ -2,6 +2,15 @@ font {
     color: #222222;
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    background-color: #f2f2f2;
+}
+
 .mainPart {
     position: relative;
     padding-top: 10em;

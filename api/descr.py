@@ -1,8 +1,9 @@
 import random
+from typing import Tuple
 from tools import prettify_join
 
 
-def make_description(session_id: int, params: dict, photo_features: list, language="en") -> str:
+def make_description(session_id: int, params: dict, photo_features: list, language="en") -> Tuple[int, str]:
     if session_id == 0:
         session_id += random.randint(0, 6)
         session_id += random.randint(0, 1) * 10
@@ -13,8 +14,6 @@ def make_description(session_id: int, params: dict, photo_features: list, langua
     adv1 = session_id % 10
     adv1_words = {0: "fantastic", 1: "spectacular", 2: "beautiful", 3: "excellent", 4: "nice",
                   5: "wonderful", 6: "magnificent"}
-    adv_bath = session_id // 10 % 10
-    adv_bath_words = {0: "", 1: ""}
     adv_living = session_id // 100 % 10
     adv_living_words = {0: "", 1: "spacious ", 2: "stylish "}
     adv_kitchen = session_id // 1000 % 10
@@ -38,7 +37,7 @@ def make_description(session_id: int, params: dict, photo_features: list, langua
     joined_features = room_types | room_features
 
     if language == "ru":
-        return make_description_ru(joined_features, living_features, kitchen_features, params)
+        return make_description_ru(session_id, joined_features, living_features, kitchen_features, params)
 
     main_template = "This %s %s for rent is located %s. \
 The %s has floor area of %sm2 including %s.\
@@ -95,15 +94,16 @@ Tel.: %s, %s.\n"
     pets = "Living with pets is allowed. " if params["pets"] else ""
     disabled = "Home is adapted for persons with reduced mobility." if params["disabled"] else ""
 
-    return main_template % (
+    return (session_id, main_template % (
         adv1_words[adv1], params["type"], params["location"],
         params["type"], params["size"], rooms,
         outside, view, condition, living, kitchen,
         facilities, pets, disabled, goodbye_words[goodbye],
-        params["phone"], params["name"])
+        params["phone"], params["name"]))
 
 
-def make_description_ru(joined_features: set, living_features: set, kitchen_features: set, params: dict):
+def make_description_ru(session_id: int, joined_features: set, living_features: set, kitchen_features: set,
+                        params: dict):
     toru = {"deck": "настил", "dock": "причал", "hot tub": "джакузи", "sport court": "стадион", "garage": "гараж",
             "lawn": "лужайка", "outdoor kitchen": "кухня",
             "outdoor living space": "беседка", "pergola": "беседка", "pool": "бассейн",
@@ -147,6 +147,6 @@ def make_description_ru(joined_features: set, living_features: set, kitchen_feat
     pets = "Разрешается проживание с домашними животными.\n" if params["pets"] else ""
     disabled = "Дом приспособлен для людей с ограниченными возможностями.\n" if params["disabled"] else ""
 
-    return main_template % (params["location"], params["size"], params["bedrooms"], params["bathrooms"],
-                            outside, view, condition, living, kitchen, pets, disabled,
-                            params['phone'], params["name"])
+    return (session_id, main_template % (params["location"], params["size"], params["bedrooms"], params["bathrooms"],
+                                         outside, view, condition, living, kitchen, pets, disabled,
+                                         params['phone'], params["name"]))

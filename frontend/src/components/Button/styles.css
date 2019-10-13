@@ -1,6 +1,4 @@
 .button {
-    position: fixed;
-    right: 0;
     width: 30%;
     height: 2.5em;
     color: white;
@@ -10,5 +8,4 @@
     cursor: pointer;
     background-color: #45a049;
     font-size: 24px;
-
 }
