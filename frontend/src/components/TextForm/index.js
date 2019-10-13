@@ -26,7 +26,8 @@ class TextForm extends Component {
       photoGroups: [],
       imageKeys: [],
       form: {},
-      sessionId: 0
+      sessionId: 0,
+        isLoading: false
     };
 
     this.formChange = this.formChange.bind(this);
@@ -49,16 +50,18 @@ class TextForm extends Component {
       this.setState({
         adText: xhr.response.description,
         photoGroups: xhr.response.types,
-        sessionId: xhr.response.session_id
+        sessionId: xhr.response.session_id,
+          isLoading: false
       });
     };
+    this.setState({isLoading: true},
     xhr.send(
       JSON.stringify({
         form: this.state.form,
         image_keys: this.state.imageKeys,
         session_id: this.state.sessionId
       })
-    );
+    ));
   }
 
   handleSubmit = event => {
@@ -104,7 +107,7 @@ class TextForm extends Component {
         <main className="mainPart">
           <div className="leftPart">
             <p className="descPart">
-                {parts.map(x => this.pForm(x))}
+                {this.state.isLoading ? <img src={process.env.PUBLIC_URL + "/loading.gif"} /> : parts.map(x => this.pForm(x))}
             </p>
             <div className="photoForm">
               {this.state.photoGroups.map(item => PhotoGroup(item))}
