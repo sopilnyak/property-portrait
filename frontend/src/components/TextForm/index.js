@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Alert } from "reactstrap";
 import "./styles.css";
 
+export var adText;
+
 const PhotoGroup = ({ room, image_urls }) => {
   return (
     <div className="photoGroup">
@@ -29,6 +31,8 @@ class TextForm extends Component {
       sessionId: 0
     };
 
+    adText=this.state.adText;
+
     this.formChange = this.formChange.bind(this);
   }
 
@@ -51,6 +55,7 @@ class TextForm extends Component {
         photoGroups: xhr.response.types,
         sessionId: xhr.response.session_id
       });
+      adText=this.state.adText;
     };
     xhr.send(
       JSON.stringify({
