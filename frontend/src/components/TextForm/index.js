@@ -23,7 +23,8 @@ class TextForm extends Component {
       adText: "There will be your ad text",
       photoGroups: [],
       imageKeys: [],
-      form: {}
+      form: {},
+      sessionId: 0
     };
 
     this.formChange = this.formChange.bind(this);
@@ -43,14 +44,17 @@ class TextForm extends Component {
     );
     xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
     xhr.onload = () => {
-      this.setState({ adText: xhr.response.description });
-      console.log(xhr.response.types);
-      this.setState({ photoGroups: xhr.response.types });
+      this.setState({
+        adText: xhr.response.description,
+        photoGroups: xhr.response.types,
+        sessionId: xhr.response.session_id
+      });
     };
     xhr.send(
       JSON.stringify({
         form: this.state.form,
-        image_keys: this.state.imageKeys
+        image_keys: this.state.imageKeys,
+        session_id: this.state.sessionId
       })
     );
   }
@@ -91,56 +95,63 @@ class TextForm extends Component {
 
   render() {
     return (
-      <div>
+      <div className="bodyPart">
         <main className="mainPart">
           <p>{this.state.adText}</p>
           <form onSubmit={this.handleSubmit}>
             <div className="infoForm">
-              <div className="secondColumn">
-                <form onSubmit={this.uploadFile}>
-                  <input name="file" id="file" type="file" />
-                  <input type="submit" value="Upload" />
-                </form>
+              <div className="formColumn">
                 <input
                   name="name"
                   type="text"
                   id="name"
-                  placeholder="Full name"
-                />{" "}
-                <br />
-                <input
-                  name="location"
-                  type="text"
-                  id="location"
-                  placeholder="Location"
-                />{" "}
-                <br />
-                <input
-                  name="size"
-                  type="text"
-                  id="size"
-                  placeholder="Area"
-                />{" "}
+                  placeholder="John Biene"
+                />
                 <br />
                 <input
                   name="phone"
                   type="text"
                   id="phone"
-                  placeholder="Phone"
-                />{" "}
+                  placeholder="+34 123 456 7890"
+                />
                 <br />
-                <select id="type" name="type" placeholder="Type">
-                  {" "}
-                  <br />
+                <input
+                  name="location"
+                  type="text"
+                  id="location"
+                  placeholder="at HackUPC, Barcelona..."
+                />
+                <br />
+                <input name="size" type="text" id="size" placeholder="100 m2" />
+                <br />
+                <input
+                  name="price"
+                  type="text"
+                  id="price"
+                  placeholder="1000 €/month"
+                />
+                <br />
+                <select
+                  id="type"
+                  name="type"
+                  placeholder="Type"
+                  defaultValue="flat"
+                >
                   <option value="flat">Flat</option>
                   <option value="house">House</option>
                   <option value="duplex">Duplex</option>
                   <option value="penthouse">Penthouse</option>
-                </select>{" "}
+                </select>
                 <br />
                 Bedrooms <br />
                 <div className="radio-group">
-                  <input type="radio" id="one-room" name="bedrooms" value="1" />
+                  <input
+                    type="radio"
+                    id="one-room"
+                    name="bedrooms"
+                    value="1"
+                    defaultChecked
+                  />
                   <label htmlFor="one-room">1</label>
                   <input type="radio" id="two-room" name="bedrooms" value="2" />
                   <label htmlFor="two-room">2</label>
@@ -151,7 +162,7 @@ class TextForm extends Component {
                     value="3"
                   />
                   <label htmlFor="three-room">3</label>
-                </div>{" "}
+                </div>
                 <br />
                 Bathrooms <br />
                 <div className="radio-group">
@@ -160,6 +171,7 @@ class TextForm extends Component {
                     id="one-bathroom"
                     name="bathrooms"
                     value="1"
+                    defaultChecked
                   />
                   <label htmlFor="one-bathroom">1</label>
                   <input
@@ -176,53 +188,37 @@ class TextForm extends Component {
                     value="3"
                   />
                   <label htmlFor="three-bathroom">3</label>
-                </div>{" "}
+                </div>
                 <br />
-                <input type="checkbox" name="terrace" className="single" />{" "}
-                Terrace <br />
               </div>
 
-              <div className="secondColumn">
+              <div className="formColumn">
+                <input type="checkbox" name="terrace" className="single" />
+                Terrace <br />
                 <input type="checkbox" name="pets" className="single" /> Pets
                 allowed <br />
-                <input
-                  type="checkbox"
-                  name="disabled"
-                  className="single"
-                />{" "}
+                <input type="checkbox" name="disabled" className="single" />
                 Accessible <br />
-                <input
-                  type="checkbox"
-                  name="renovated"
-                  className="single"
-                />{" "}
+                <input type="checkbox" name="renovated" className="single" />
                 Recently renovated <br />
                 <input
                   type="checkbox"
                   name="air_conditioning"
                   className="single"
-                />{" "}
+                />
                 Air conditioning <br />
                 <div className="nearby">
                   Nearby <br />
-                  <input
-                    type="checkbox"
-                    name="transport"
-                    className="single"
-                  />{" "}
+                  <input type="checkbox" name="transport" className="single" />
                   Public transport <br />
-                  <input
-                    type="checkbox"
-                    name="schools"
-                    className="single"
-                  />{" "}
+                  <input type="checkbox" name="schools" className="single" />
                   Schools <br />
-                  <input type="checkbox" name="shops" className="single" />{" "}
+                  <input type="checkbox" name="shops" className="single" />
                   Shops <br />
                 </div>
               </div>
             </div>
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Generate!" />
           </form>
         </main>
         <div className="photoForm">
