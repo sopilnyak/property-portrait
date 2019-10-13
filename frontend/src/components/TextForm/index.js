@@ -61,7 +61,7 @@ class TextForm extends Component {
 
   render() {
     return (
-        <div>
+        <div className="bodyPart">
         <main className="mainPart">
           <p>{this.state.adText}</p>
 
