@@ -5,9 +5,12 @@ import './styles.css';
 class Header extends Component {render() {
         return (
             <footer>
-                {(window.location.href !== 'http://localhost:3000/result') && <Button
+                <div class="nextStep">{(window.location.href !== 'http://localhost:3000/result') && <Button
                     parentState={this.callback}
-                />}
+                />}</div>
+                <div class="copyright">Powered by Restb.ai technologies</div>
+
+
             </footer>
         );
     }
